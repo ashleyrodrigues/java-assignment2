@@ -32,7 +32,7 @@ public class ProductUI extends JFrame {
 	private JPanel productIdPanel, namePanel, descriptionPanel, quantityPanel, pricePanel, twoButtonPanel,
 	fourButtonPanel;
 	private JLabel mainLabel;
-	private JLabel productIdLabel, nameLabel, descriptionLabel, quantityLabel, priceLabel;
+	private JLabel productIdLabel, nameLabel, descriptionLabel, quantityLabel, priceLabel, errorLabel;
 	private JTextField productIdField, nameField, quantityField, priceField;
 	private JTextArea descriptionField;
 	private JButton addButton, updateButton, firstButton, prevButton, nextButton, lastButton;
@@ -206,6 +206,9 @@ public class ProductUI extends JFrame {
 		pricePanel.add(priceLabel);
 		pricePanel.add(priceField);
 		addUpdatePanel.add(pricePanel);
+		//error label
+		errorLabel = new JLabel("sugma");
+		addUpdatePanel.add(errorLabel);
 		// buttons
 		addButton = new JButton("Add");
 		addButton.addActionListener(addProduct);
@@ -227,7 +230,7 @@ public class ProductUI extends JFrame {
 		fourButtonPanel.add(prevButton);
 		fourButtonPanel.add(nextButton);
 		fourButtonPanel.add(lastButton);
-		addUpdatePanel.add(twoButtonPanel);
+		addUpdatePanel.add(twoButtonPanel, BorderLayout.SOUTH);
 		addUpdatePanel.add(fourButtonPanel);
 		addUpdatePanel.setVisible(false);
 		mainPanel.add(addUpdatePanel);
@@ -253,9 +256,9 @@ public class ProductUI extends JFrame {
 		topPanel.add(radioButtonPanel);
 		//to from
 		toField = new JTextField(10);
-		toField.setText("to");
+		toField.setText("min.");
 		fromField = new JTextField(10);
-		fromField.setText("from");
+		fromField.setText("max.");
 		toFromPanel = new JPanel();
 		toFromPanel.add(toField);
 		toFromPanel.add(fromField);
@@ -305,21 +308,21 @@ public class ProductUI extends JFrame {
 				System.out.println("Ohhh HELL NO");
 				chk = false;
 			}
-			}
+		}
 		if(chk) {
-				Product pr = new Product(productIdField.getText(), 
-						nameField.getText(), 
-						descriptionField.getText(),
-						Integer.parseInt(quantityField.getText()), 
-						Integer.parseInt(priceField.getText()));
-				productList.add(pr);
-				writeToFile(FILEPATH);
-				productIdField.setText("");
-				nameField.setText("");
-				descriptionField.setText("");
-				quantityField.setText("");
-				priceField.setText("");
-			}
+			Product pr = new Product(productIdField.getText(), 
+					nameField.getText(), 
+					descriptionField.getText(),
+					Integer.parseInt(quantityField.getText()), 
+					Integer.parseInt(priceField.getText()));
+			productList.add(pr);
+			writeToFile(FILEPATH);
+			productIdField.setText("");
+			nameField.setText("");
+			descriptionField.setText("");
+			quantityField.setText("");
+			priceField.setText("");
+		}
 	}
 
 	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {
@@ -340,7 +343,7 @@ public class ProductUI extends JFrame {
 		descriptionField.setText("");
 		quantityField.setText("");
 		priceField.setText("");
-		
+
 	}
 
 	public void firstButton() throws FileNotFoundException, ClassNotFoundException, IOException {
@@ -395,8 +398,8 @@ public class ProductUI extends JFrame {
 				System.out.println("Ohhh HELL NO");
 				chk = false;
 			}
-			}	
-		
+		}	
+
 		return chk;
 	}
 	public void fillFields(Product product) {
@@ -408,16 +411,24 @@ public class ProductUI extends JFrame {
 	}
 
 	public void findDisplayButton() {
+		String productDetails = "";
 		if(priceRange.isSelected()) {
-			
+			for(int i=0;i<productList.size();i++) {
+				if(productList.get(i).getUnitPrice() >= Integer.parseInt(toField.getText())  && 
+						productList.get(i).getUnitPrice() <= Integer.parseInt(fromField.getText()))
+					productDetails += productList.get(i).toString() + "\n";
+			}
 		} else if(keyword.isSelected()) {
-			
+			for(int i=0;i<productList.size();i++) {
+				if(productList.get(i).getName().contains(keywordField.getText()))
+					productDetails += productList.get(i).toString() + "\n";
+			}
 		} else if(all.isSelected()) {
-			String productDetails = "";
 			for(int i=0;i<productList.size();i++) {
 				productDetails += productList.get(i).toString() + "\n";
 			}
-			resultField.setText(productDetails);
 		}
+		resultField.setText(productDetails);
+
 	}
 }
