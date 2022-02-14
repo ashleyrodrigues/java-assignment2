@@ -28,7 +28,7 @@ public class ProductUI extends JFrame {
 	private JMenuItem exitMenuItem, addUpdateMenuItem, findDisplayMenuItem;
 	private JPanel mainPanel, addUpdatePanel, findDisplayPanel;
 	private JPanel productIdPanel, namePanel, descriptionPanel, quantityPanel, pricePanel, twoButtonPanel,
-			fourButtonPanel;
+	fourButtonPanel;
 	private JLabel mainLabel;
 	private JLabel productIdLabel, nameLabel, descriptionLabel, quantityLabel, priceLabel;
 	private JTextField productIdField, nameField, quantityField, priceField;
@@ -281,18 +281,36 @@ public class ProductUI extends JFrame {
 	}
 
 	public void addButton() throws FileNotFoundException, IOException {
-		Product pr = new Product(productIdField.getText(), nameField.getText(), descriptionField.getText(),
-				Integer.parseInt(quantityField.getText()), Integer.parseInt(priceField.getText()));
-		productList.add(pr);
-		writeToFile(FILEPATH);
-		productIdField.setText("");
-		nameField.setText("");
-		descriptionField.setText("");
-		quantityField.setText("");
-		priceField.setText("");
+		boolean chk = true;
+		for(int i=0;i<productList.size();i++) {
+			if(productList.get(i).getProductId().equals(productIdField.getText())){
+				System.out.println("Ohhh HELL NO");
+				chk = false;
+			}
+			}
+		if(chk) {
+				Product pr = new Product(productIdField.getText(), 
+						nameField.getText(), 
+						descriptionField.getText(),
+						Integer.parseInt(quantityField.getText()), 
+						Integer.parseInt(priceField.getText()));
+				productList.add(pr);
+				writeToFile(FILEPATH);
+				productIdField.setText("");
+				nameField.setText("");
+				descriptionField.setText("");
+				quantityField.setText("");
+				priceField.setText("");
+			}
 	}
 
 	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+		for(int i=0;i<productList.size();i++) {
+			if(productList.get(i).productId.equals(productIdField.getText())){
+				System.out.println("Ohhh HELL NO");
+				//chk = false;
+			}
+		}	
 		productList.get(index).setProductId(productIdField.getText());
 		productList.get(index).setName(nameField.getText());
 		productList.get(index).setDescription(descriptionField.getText());
@@ -304,6 +322,7 @@ public class ProductUI extends JFrame {
 		descriptionField.setText("");
 		quantityField.setText("");
 		priceField.setText("");
+		
 	}
 
 	public void firstButton() throws FileNotFoundException, ClassNotFoundException, IOException {
