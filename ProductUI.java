@@ -299,8 +299,14 @@ public class ProductUI extends JFrame {
 	}
 
 	public void addButton() throws FileNotFoundException, IOException {
-		
-		if(checkFields()) {
+		boolean chk = true;
+		for(int i=0;i<productList.size();i++) {
+			if(productList.get(i).getProductId().equals(productIdField.getText())){
+				System.out.println("Ohhh HELL NO");
+				chk = false;
+			}
+			}
+		if(chk) {
 				Product pr = new Product(productIdField.getText(), 
 						nameField.getText(), 
 						descriptionField.getText(),
@@ -393,7 +399,6 @@ public class ProductUI extends JFrame {
 		
 		return chk;
 	}
-	
 	public void fillFields(Product product) {
 		productIdField.setText(product.getProductId());
 		nameField.setText(product.getName());

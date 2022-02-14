@@ -1,9 +1,7 @@
 import java.io.Serializable;
 
 public class Product implements Serializable {
-
-    private static final long serialVersionUID = 5694297608962944593L;
-
+	private static final long serialVersionUID = 3653536610486882596L;
 	String productId;
 	String name;
 	String description;
