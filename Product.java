@@ -8,18 +8,42 @@ public class Product implements Serializable {
 	int quantityInHand;
 	int unitPrice;
 
-	/*
-	 * public Product() { super(); this.productId = "50IM"; this.name = "Imran";
-	 * this.description = "Hey it Imran Khan"; this.quantityInHand = 5;
-	 * this.unitPrice = 50; }
-	 */
-
 	public Product(String productId, String name, String description, int quantityInHand, int unitPrice) {
 		super();
 		this.productId = productId;
 		this.name = name;
 		this.description = description;
 		this.quantityInHand = quantityInHand;
+		this.unitPrice = unitPrice;
+	}
+
+
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+	public void setQuantityInHand(int quantityInHand) {
+		this.quantityInHand = quantityInHand;
+	}
+
+
+
+	public void setUnitPrice(int unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 

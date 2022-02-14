@@ -21,13 +21,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class ProductUI extends JFrame {
-	ArrayList<Product> productObjects = new ArrayList();
+	ArrayList<Product> productList = new ArrayList();
 	private static String FILEPATH = "./product.txt";
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu fileMenu, productMenu;
 	private JMenuItem exitMenuItem, addUpdateMenuItem, findDisplayMenuItem;
 	private JPanel mainPanel, addUpdatePanel, findDisplayPanel;
-	private JPanel productIdPanel, namePanel, descriptionPanel, quantityPanel, pricePanel, twoButtonPanel, fourButtonPanel;
+	private JPanel productIdPanel, namePanel, descriptionPanel, quantityPanel, pricePanel, twoButtonPanel,
+			fourButtonPanel;
 	private JLabel mainLabel;
 	private JLabel productIdLabel, nameLabel, descriptionLabel, quantityLabel, priceLabel;
 	private JTextField productIdField, nameField, quantityField, priceField;
@@ -43,7 +44,8 @@ public class ProductUI extends JFrame {
 	private ActionListener addProduct, updateProduct, firstProduct, lastProduct, prevProduct, nextProduct;
 	private int index = 0;
 
-	public ProductUI () throws FileNotFoundException, IOException, ClassNotFoundException{
+	public ProductUI() throws FileNotFoundException, IOException, ClassNotFoundException {
+		productList = readFromFile(FILEPATH);
 		class ExitMenuistener implements ActionListener {
 			public void actionPerformed(ActionEvent event)
 
@@ -52,20 +54,17 @@ public class ProductUI extends JFrame {
 			}
 		}
 		class AddUpdateMenuListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
+			public void actionPerformed(ActionEvent event) {
 				showAddUpdateMenu();
 			}
 		}
 		class FindDisplayMenuListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
+			public void actionPerformed(ActionEvent event) {
 				showFindDisplayMenu();
 			}
 		}
 		class addProductListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
+			public void actionPerformed(ActionEvent event) {
 				try {
 					addButton();
 				} catch (FileNotFoundException e) {
@@ -76,14 +75,17 @@ public class ProductUI extends JFrame {
 			}
 		}
 		class updateProductListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
-				updateButton();
+			public void actionPerformed(ActionEvent event) {
+				try {
+					updateButton();
+				} catch (ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		class firstProductListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
+			public void actionPerformed(ActionEvent event) {
 				try {
 					firstButton();
 				} catch (ClassNotFoundException | IOException e) {
@@ -93,8 +95,7 @@ public class ProductUI extends JFrame {
 			}
 		}
 		class lastProductListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
+			public void actionPerformed(ActionEvent event) {
 				try {
 					lastButton();
 				} catch (ClassNotFoundException | IOException e) {
@@ -104,8 +105,7 @@ public class ProductUI extends JFrame {
 			}
 		}
 		class prevProductListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
+			public void actionPerformed(ActionEvent event) {
 				try {
 					prevButton();
 				} catch (ClassNotFoundException | IOException e) {
@@ -115,8 +115,7 @@ public class ProductUI extends JFrame {
 			}
 		}
 		class nextProductListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)
-			{
+			public void actionPerformed(ActionEvent event) {
 				try {
 					nextButton();
 				} catch (ClassNotFoundException | IOException e) {
@@ -154,47 +153,47 @@ public class ProductUI extends JFrame {
 		menuBar.add(productMenu);
 		setJMenuBar(menuBar);
 
-		mainLabel = new JLabel("Product Management System",  SwingConstants.CENTER);
+		mainLabel = new JLabel("Product Management System", SwingConstants.CENTER);
 		mainLabel.setFont(new Font("Serif", Font.PLAIN, 24));
 		mainPanel.add(mainLabel, BorderLayout.CENTER);
 
 		addUpdatePanel = new JPanel();
-		//product id
+		// product id
 		productIdPanel = new JPanel();
 		productIdLabel = new JLabel("Product ID");
 		productIdField = new JTextField(10);
 		productIdPanel.add(productIdLabel);
 		productIdPanel.add(productIdField);
 		addUpdatePanel.add(productIdPanel);
-		//name
+		// name
 		namePanel = new JPanel();
 		nameLabel = new JLabel("Name");
 		nameField = new JTextField(15);
 		namePanel.add(nameLabel);
 		namePanel.add(nameField);
 		addUpdatePanel.add(namePanel);
-		//description
+		// description
 		descriptionPanel = new JPanel();
 		descriptionLabel = new JLabel("Description");
-		descriptionField = new JTextArea(3,10);
+		descriptionField = new JTextArea(3, 10);
 		descriptionPanel.add(descriptionLabel);
 		descriptionPanel.add(descriptionField);
 		addUpdatePanel.add(descriptionPanel);
-		//quantity
+		// quantity
 		quantityPanel = new JPanel();
 		quantityLabel = new JLabel("Quantity in hand");
 		quantityField = new JTextField(7);
 		quantityPanel.add(quantityLabel);
 		quantityPanel.add(quantityField);
 		addUpdatePanel.add(quantityPanel);
-		//price
+		// price
 		pricePanel = new JPanel();
 		priceLabel = new JLabel("Unit Price");
 		priceField = new JTextField(7);
 		pricePanel.add(priceLabel);
 		pricePanel.add(priceField);
 		addUpdatePanel.add(pricePanel);
-		//buttons
+		// buttons
 		addButton = new JButton("Add");
 		addButton.addActionListener(addProduct);
 		updateButton = new JButton("Update");
@@ -220,9 +219,8 @@ public class ProductUI extends JFrame {
 		addUpdatePanel.setVisible(false);
 		mainPanel.add(addUpdatePanel);
 
-
 		findDisplayPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 5));
-		//filter radio buttons
+		// filter radio buttons
 		filterBy = new ButtonGroup();
 		priceRange = new JRadioButton("Price Range");
 		keyword = new JRadioButton("Keyword");
@@ -237,7 +235,7 @@ public class ProductUI extends JFrame {
 		radioButtonPanel.add(all);
 		findDisplayPanel.add(radioButtonPanel);
 		findDisplayPanel.add(radioButtonPanel);
-		//to from
+		// to from
 		toField = new JTextField(10);
 		toField.setText("to");
 		fromField = new JTextField(10);
@@ -245,7 +243,7 @@ public class ProductUI extends JFrame {
 		toFromPanel = new JPanel();
 		toFromPanel.add(toField);
 		toFromPanel.add(fromField);
-		//keyword
+		// keyword
 		keywordField = new JTextField(10);
 		keywordField.setText("keyword");
 		keywordPanel = new JPanel();
@@ -255,13 +253,13 @@ public class ProductUI extends JFrame {
 		filtersPanel.add(toFromPanel);
 		filtersPanel.add(keywordPanel);
 		findDisplayPanel.add(filtersPanel);
-		//findDisplay Button
+		// findDisplay Button
 		findDisplayButton = new JButton("Find/Display");
 		findDisplayButtonPanel = new JPanel();
 		findDisplayButtonPanel.add(findDisplayButton);
 		findDisplayPanel.add(findDisplayButtonPanel);
-		//result
-		resultField = new JTextArea(8,60);
+		// result
+		resultField = new JTextArea(8, 60);
 		resultPanel = new JPanel();
 		resultPanel.add(resultField);
 		findDisplayPanel.add(resultPanel);
@@ -283,6 +281,9 @@ public class ProductUI extends JFrame {
 	}
 
 	public void addButton() throws FileNotFoundException, IOException {
+		Product pr = new Product(productIdField.getText(), nameField.getText(), descriptionField.getText(),
+				Integer.parseInt(quantityField.getText()), Integer.parseInt(priceField.getText()));
+		productList.add(pr);
 		writeToFile(FILEPATH);
 		productIdField.setText("");
 		nameField.setText("");
@@ -291,54 +292,60 @@ public class ProductUI extends JFrame {
 		priceField.setText("");
 	}
 
-	public void updateButton() {
-
+	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+		productList.get(index).setProductId(productIdField.getText());
+		productList.get(index).setName(nameField.getText());
+		productList.get(index).setDescription(descriptionField.getText());
+		productList.get(index).setQuantityInHand(Integer.parseInt(quantityField.getText()));
+		productList.get(index).setUnitPrice(Integer.parseInt(priceField.getText()));
+		writeToFile(FILEPATH);
+		productIdField.setText("");
+		nameField.setText("");
+		descriptionField.setText("");
+		quantityField.setText("");
+		priceField.setText("");
 	}
 
 	public void firstButton() throws FileNotFoundException, ClassNotFoundException, IOException {
 		index = 0;
-		ArrayList<Product> productList = readFromFile(FILEPATH);
 		Product product = productList.get(index);
 		fillFields(product);
 	}
 
 	public void lastButton() throws FileNotFoundException, ClassNotFoundException, IOException {
-		ArrayList<Product> productList = readFromFile(FILEPATH);
 		index = productList.size() - 1;
 		Product product = productList.get(index);
 		fillFields(product);
 	}
 
 	public void prevButton() throws FileNotFoundException, ClassNotFoundException, IOException {
-		index--;
-		ArrayList<Product> productList = readFromFile(FILEPATH);
-		Product product = productList.get(index);
-		fillFields(product);
-	}
-
-	public void nextButton() throws FileNotFoundException, ClassNotFoundException, IOException {
-		index++;
-		ArrayList<Product> productList = readFromFile(FILEPATH);
-		Product product = productList.get(index);
-		fillFields(product);
-	}
-
-	public void writeToFile(String filepath) throws FileNotFoundException, IOException {
-		try (ObjectOutputStream output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(filepath))))) {
-			//productObjects = new ArrayList<Product>();		
-			Product pr = new Product(productIdField.getText(),
-					nameField.getText(),
-					descriptionField.getText(),
-					Integer.parseInt(quantityField.getText()),
-					Integer.parseInt(priceField.getText()));
-			productObjects.add(pr);
-			output.writeObject(productObjects);
-			//productObjects.add(pr);
+		if (index > 0) {
+			index--;
+			ArrayList<Product> productList = readFromFile(FILEPATH);
+			Product product = productList.get(index);
+			fillFields(product);
 		}
 	}
 
-	public ArrayList<Product> readFromFile(String filepath) throws FileNotFoundException, IOException, ClassNotFoundException {
-		try (ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(filepath))))) {
+	public void nextButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+		if (index < productList.size() - 1) {
+			index++;
+			Product product = productList.get(index);
+			fillFields(product);
+		}
+	}
+
+	public void writeToFile(String filepath) throws FileNotFoundException, IOException {
+		try (ObjectOutputStream output = new ObjectOutputStream(
+				new BufferedOutputStream(new FileOutputStream(new File(filepath))))) {
+			output.writeObject(productList);
+		}
+	}
+
+	public ArrayList<Product> readFromFile(String filepath)
+			throws FileNotFoundException, IOException, ClassNotFoundException {
+		try (ObjectInputStream input = new ObjectInputStream(
+				new BufferedInputStream(new FileInputStream(new File(filepath))))) {
 			ArrayList<Product> pr = (ArrayList<Product>) input.readObject();
 			return pr;
 		}
