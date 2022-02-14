@@ -11,7 +11,7 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Add/Update Product");													//Set Title of Frame
 		frame.setVisible(true);														//Set Frame visibility
-		frame.setSize(650,300); 
+		frame.setResizable(true);
 	}
 
 }
