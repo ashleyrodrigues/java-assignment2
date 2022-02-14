@@ -2,6 +2,8 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
 
+    private static final long serialVersionUID = 5694297608962944593L;
+
 	String productId;
 	String name;
 	String description;
@@ -71,8 +73,8 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", name=" + name + ", description=" + description
-				+ ", quantityInHand=" + quantityInHand + ", unitPrice=" + unitPrice + "]";
+		return "productId=" + productId + ", name=" + name + ", description=" + description
+				+ ", quantityInHand=" + quantityInHand + ", unitPrice=" + unitPrice;
 	}
 
 }

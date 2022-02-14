@@ -389,7 +389,8 @@ public class ProductUI extends JFrame {
 				System.out.println("Ohhh HELL NO");
 				chk = false;
 			}
-			}
+			}	
+		
 		return chk;
 	}
 	
@@ -407,11 +408,9 @@ public class ProductUI extends JFrame {
 		} else if(keyword.isSelected()) {
 			
 		} else if(all.isSelected()) {
-			System.out.println(productList);
 			String productDetails = "";
 			for(int i=0;i<productList.size();i++) {
-				System.out.println(productList);
-				productDetails = productList.toString();
+				productDetails += productList.get(i).toString() + "\n";
 			}
 			resultField.setText(productDetails);
 		}
