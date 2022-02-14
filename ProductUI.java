@@ -299,14 +299,8 @@ public class ProductUI extends JFrame {
 	}
 
 	public void addButton() throws FileNotFoundException, IOException {
-		boolean chk = true;
-		for(int i=0;i<productList.size();i++) {
-			if(productList.get(i).getProductId().equals(productIdField.getText())){
-				System.out.println("Ohhh HELL NO");
-				chk = false;
-			}
-			}
-		if(chk) {
+		
+		if(checkFields()) {
 				Product pr = new Product(productIdField.getText(), 
 						nameField.getText(), 
 						descriptionField.getText(),
@@ -388,6 +382,17 @@ public class ProductUI extends JFrame {
 		}
 	}
 
+	public boolean checkFields() {
+		boolean chk = true;
+		for(int i=0;i<productList.size();i++) {
+			if(productList.get(i).getProductId().equals(productIdField.getText())){
+				System.out.println("Ohhh HELL NO");
+				chk = false;
+			}
+			}
+		return chk;
+	}
+	
 	public void fillFields(Product product) {
 		productIdField.setText(product.getProductId());
 		nameField.setText(product.getName());
@@ -402,11 +407,11 @@ public class ProductUI extends JFrame {
 		} else if(keyword.isSelected()) {
 			
 		} else if(all.isSelected()) {
-			System.out.println(productObjects);
+			System.out.println(productList);
 			String productDetails = "";
-			for(int i=0;i<productObjects.size();i++) {
-				System.out.println(productObjects);
-				productDetails = productObjects.toString();
+			for(int i=0;i<productList.size();i++) {
+				System.out.println(productList);
+				productDetails = productList.toString();
 			}
 			resultField.setText(productDetails);
 		}
