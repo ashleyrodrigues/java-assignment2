@@ -69,4 +69,10 @@ public class Product implements Serializable {
 		return unitPrice;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", name=" + name + ", description=" + description
+				+ ", quantityInHand=" + quantityInHand + ", unitPrice=" + unitPrice + "]";
+	}
+
 }
