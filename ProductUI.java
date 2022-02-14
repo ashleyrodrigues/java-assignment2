@@ -302,14 +302,7 @@ public class ProductUI extends JFrame {
 	}
 
 	public void addButton() throws FileNotFoundException, IOException {
-		boolean chk = true;
-		for(int i=0;i<productList.size();i++) {
-			if(productList.get(i).getProductId().equals(productIdField.getText())){
-				System.out.println("Ohhh HELL NO");
-				chk = false;
-			}
-		}
-		if(chk) {
+		if(checkFields()) {
 			Product pr = new Product(productIdField.getText(), 
 					nameField.getText(), 
 					descriptionField.getText(),
@@ -326,12 +319,8 @@ public class ProductUI extends JFrame {
 	}
 
 	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {
-		for(int i=0;i<productList.size();i++) {
-			if(productList.get(i).productId.equals(productIdField.getText())){
-				System.out.println("Ohhh HELL NO");
-				//chk = false;
-			}
-		}	
+		//if()
+		
 		productList.get(index).setProductId(productIdField.getText());
 		productList.get(index).setName(nameField.getText());
 		productList.get(index).setDescription(descriptionField.getText());
@@ -399,9 +388,38 @@ public class ProductUI extends JFrame {
 				chk = false;
 			}
 		}	
-
+		if(isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) > 0) {
+			chk = false;
+		}
+		if(isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) > 0) {
+			chk = false;
+		}
+		if(nameField.getText().isEmpty()) {
+			chk = false;
+		}
 		return chk;
 	}
+	
+	public boolean checkFields(int idx) {
+		boolean chk = true;
+		for(int i=0;i<productList.size();i++) {
+			if(productList.get(i).getProductId().equals(productIdField.getText())){
+				System.out.println("Ohhh HELL NO");
+				chk = false;
+			}
+		}	
+		if(isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) > 0) {
+			chk = false;
+		}
+		if(isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) > 0) {
+			chk = false;
+		}
+		if(nameField.getText().isEmpty()) {
+			chk = false;
+		}
+		return chk;
+	}
+
 	public void fillFields(Product product) {
 		productIdField.setText(product.getProductId());
 		nameField.setText(product.getName());
@@ -423,12 +441,21 @@ public class ProductUI extends JFrame {
 				if(productList.get(i).getName().contains(keywordField.getText()))
 					productDetails += productList.get(i).toString() + "\n";
 			}
-		} else if(all.isSelected()) {
+		}  else if(all.isSelected()) {
 			for(int i=0;i<productList.size();i++) {
 				productDetails += productList.get(i).toString() + "\n";
 			}
 		}
 		resultField.setText(productDetails);
 
+	}
+
+	public static boolean isNumeric(String str) { 
+		try {  
+			Double.parseDouble(str);  
+			return true;
+		} catch(NumberFormatException e){  
+			return false;  
+		}  
 	}
 }
