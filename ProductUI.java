@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -39,9 +41,9 @@ public class ProductUI extends JFrame {
 	private JTextField toField, fromField, keywordField;
 	private JButton findDisplayButton;
 	private JTextArea resultField;
-	private JPanel radioButtonPanel, toFromPanel, keywordPanel, findDisplayButtonPanel, resultPanel, filtersPanel;
+	private JPanel radioButtonPanel, toFromPanel, keywordPanel, findDisplayButtonPanel, topPanel, resultPanel, filtersPanel;
 	private ActionListener exitApp, addUpdateMenuEvent, findDisplayMenuEvent;
-	private ActionListener addProduct, updateProduct, firstProduct, lastProduct, prevProduct, nextProduct;
+	private ActionListener addProduct, updateProduct, firstProduct, lastProduct, prevProduct, nextProduct, findDisplayAction;
 	private int index = 0;
 
 	public ProductUI() throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -124,6 +126,12 @@ public class ProductUI extends JFrame {
 				}
 			}
 		}
+		class findDisplayListener implements ActionListener {
+			public void actionPerformed(ActionEvent event)
+			{
+				findDisplayButton();
+			}
+		}
 		exitApp = new ExitMenuistener();
 		addUpdateMenuEvent = new AddUpdateMenuListener();
 		findDisplayMenuEvent = new FindDisplayMenuListener();
@@ -133,11 +141,14 @@ public class ProductUI extends JFrame {
 		lastProduct = new lastProductListener();
 		prevProduct = new prevProductListener();
 		nextProduct = new nextProductListener();
+		findDisplayAction = new findDisplayListener();
 		createUI();
 	}
 
 	public void createUI() {
+		setSize(670, 320);
 		mainPanel = new JPanel();
+		mainPanel.setLayout(null);
 		fileMenu = new JMenu("File");
 		productMenu = new JMenu("Product");
 		addUpdateMenuItem = new JMenuItem("Add/Update");
@@ -155,10 +166,12 @@ public class ProductUI extends JFrame {
 
 		mainLabel = new JLabel("Product Management System", SwingConstants.CENTER);
 		mainLabel.setFont(new Font("Serif", Font.PLAIN, 24));
-		mainPanel.add(mainLabel, BorderLayout.CENTER);
+		mainLabel.setBounds(150, 70, 350, 100);
+		mainPanel.add(mainLabel);
 
 		addUpdatePanel = new JPanel();
-		// product id
+		addUpdatePanel.setBounds(0, 0, 650, 300);
+		//product id
 		productIdPanel = new JPanel();
 		productIdLabel = new JLabel("Product ID");
 		productIdField = new JTextField(10);
@@ -219,8 +232,12 @@ public class ProductUI extends JFrame {
 		addUpdatePanel.setVisible(false);
 		mainPanel.add(addUpdatePanel);
 
-		findDisplayPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 5));
-		// filter radio buttons
+
+		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+		topPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		findDisplayPanel = new JPanel();
+		findDisplayPanel.setBounds(0,0,650,300);
+		//filter radio buttons
 		filterBy = new ButtonGroup();
 		priceRange = new JRadioButton("Price Range");
 		keyword = new JRadioButton("Keyword");
@@ -233,9 +250,8 @@ public class ProductUI extends JFrame {
 		radioButtonPanel.add(priceRange);
 		radioButtonPanel.add(keyword);
 		radioButtonPanel.add(all);
-		findDisplayPanel.add(radioButtonPanel);
-		findDisplayPanel.add(radioButtonPanel);
-		// to from
+		topPanel.add(radioButtonPanel);
+		//to from
 		toField = new JTextField(10);
 		toField.setText("to");
 		fromField = new JTextField(10);
@@ -248,20 +264,22 @@ public class ProductUI extends JFrame {
 		keywordField.setText("keyword");
 		keywordPanel = new JPanel();
 		keywordPanel.add(keywordField);
-		findDisplayPanel.add(keywordPanel);
-		filtersPanel = new JPanel();
+		topPanel.add(keywordPanel);
+		filtersPanel = new JPanel(new GridLayout(2,1));
 		filtersPanel.add(toFromPanel);
 		filtersPanel.add(keywordPanel);
-		findDisplayPanel.add(filtersPanel);
-		// findDisplay Button
+		topPanel.add(filtersPanel);
+		//findDisplay Button
 		findDisplayButton = new JButton("Find/Display");
+		findDisplayButton.addActionListener(findDisplayAction);
 		findDisplayButtonPanel = new JPanel();
 		findDisplayButtonPanel.add(findDisplayButton);
-		findDisplayPanel.add(findDisplayButtonPanel);
-		// result
-		resultField = new JTextArea(8, 60);
+		topPanel.add(findDisplayButtonPanel);
+		//result
+		resultField = new JTextArea(8,55);
 		resultPanel = new JPanel();
 		resultPanel.add(resultField);
+		findDisplayPanel.add(topPanel);
 		findDisplayPanel.add(resultPanel);
 		findDisplayPanel.setVisible(false);
 		mainPanel.add(findDisplayPanel);
@@ -376,5 +394,21 @@ public class ProductUI extends JFrame {
 		descriptionField.setText(product.getDescription());
 		quantityField.setText(String.valueOf(product.getQuantityInHand()));
 		priceField.setText(String.valueOf(product.getUnitPrice()));
+	}
+
+	public void findDisplayButton() {
+		if(priceRange.isSelected()) {
+			
+		} else if(keyword.isSelected()) {
+			
+		} else if(all.isSelected()) {
+			System.out.println(productObjects);
+			String productDetails = "";
+			for(int i=0;i<productObjects.size();i++) {
+				System.out.println(productObjects);
+				productDetails = productObjects.toString();
+			}
+			resultField.setText(productDetails);
+		}
 	}
 }
