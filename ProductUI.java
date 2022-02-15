@@ -207,7 +207,7 @@ public class ProductUI extends JFrame {
 		pricePanel.add(priceField);
 		addUpdatePanel.add(pricePanel);
 		//error label
-		errorLabel = new JLabel("sugma");
+		errorLabel = new JLabel("");
 		addUpdatePanel.add(errorLabel);
 		// buttons
 		addButton = new JButton("Add");
@@ -303,6 +303,7 @@ public class ProductUI extends JFrame {
 
 	public void addButton() throws FileNotFoundException, IOException {
 		if(checkFields()) {
+			errorLabel = new JLabel("");
 			Product pr = new Product(productIdField.getText(), 
 					nameField.getText(), 
 					descriptionField.getText(),
@@ -319,8 +320,8 @@ public class ProductUI extends JFrame {
 	}
 
 	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {
-		//if()
-		
+		if(checkFields(index)) {
+		errorLabel = new JLabel("");
 		productList.get(index).setProductId(productIdField.getText());
 		productList.get(index).setName(nameField.getText());
 		productList.get(index).setDescription(descriptionField.getText());
@@ -332,7 +333,7 @@ public class ProductUI extends JFrame {
 		descriptionField.setText("");
 		quantityField.setText("");
 		priceField.setText("");
-
+		}
 	}
 
 	public void firstButton() throws FileNotFoundException, ClassNotFoundException, IOException {
@@ -380,42 +381,48 @@ public class ProductUI extends JFrame {
 		}
 	}
 
-	public boolean checkFields() {
+	public boolean checkFields(int idx) {
 		boolean chk = true;
 		for(int i=0;i<productList.size();i++) {
-			if(productList.get(i).getProductId().equals(productIdField.getText())){
-				System.out.println("Ohhh HELL NO");
+			if(idx!=i && productList.get(i).getProductId().equals(productIdField.getText())){
+				errorLabel.setText("Product ID Already Exisits");
 				chk = false;
 			}
 		}	
-		if(isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) > 0) {
+		if(!isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) < 0) {
 			chk = false;
+			errorLabel.setText("Quantity Should be Numeric and Greater than 0");
 		}
-		if(isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) > 0) {
+		else if(!isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) < 0) {
 			chk = false;
+			errorLabel.setText("Price Should be Numeric and Greater than 0");
 		}
-		if(nameField.getText().isEmpty()) {
+		else if(nameField.getText().isEmpty()) {
 			chk = false;
+			errorLabel.setText("Name Cannot Be Null");
 		}
 		return chk;
 	}
 	
-	public boolean checkFields(int idx) {
+	public boolean checkFields() {
 		boolean chk = true;
 		for(int i=0;i<productList.size();i++) {
 			if(productList.get(i).getProductId().equals(productIdField.getText())){
-				System.out.println("Ohhh HELL NO");
+				errorLabel.setText("Product ID Already Exisits");
 				chk = false;
 			}
 		}	
-		if(isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) > 0) {
+		if(!isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) < 0) {
 			chk = false;
+			errorLabel.setText("Quantity Should be Numeric and Greater than 0");
 		}
-		if(isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) > 0) {
+		else if(!isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) < 0) {
 			chk = false;
+			errorLabel.setText("Price Should be Numeric and Greater than 0");
 		}
-		if(nameField.getText().isEmpty()) {
+		else if(nameField.getText().isEmpty()) {
 			chk = false;
+			errorLabel.setText("Name Cannot Be Null");
 		}
 		return chk;
 	}
@@ -447,7 +454,6 @@ public class ProductUI extends JFrame {
 			}
 		}
 		resultField.setText(productDetails);
-
 	}
 
 	public static boolean isNumeric(String str) { 
