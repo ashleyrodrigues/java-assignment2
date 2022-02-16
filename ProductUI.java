@@ -389,6 +389,10 @@ public class ProductUI extends JFrame {
 				chk = false;
 			}
 		}	
+		if(quantityField.getText().isEmpty()||priceField.getText().isEmpty()) {
+			errorLabel.setText("Quantity And Price needs to be Entered");
+			chk = false;
+		}else {
 		if(!isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) < 0) {
 			chk = false;
 			errorLabel.setText("Quantity Should be Numeric and Greater than 0");
@@ -400,6 +404,7 @@ public class ProductUI extends JFrame {
 		else if(nameField.getText().isEmpty()) {
 			chk = false;
 			errorLabel.setText("Name Cannot Be Null");
+		}
 		}
 		return chk;
 	}
@@ -412,6 +417,10 @@ public class ProductUI extends JFrame {
 				chk = false;
 			}
 		}	
+		if(quantityField.getText().isEmpty()||priceField.getText().isEmpty()) {
+			errorLabel.setText("Quantity And Price needs to be Entered");
+			chk = false;
+		}else {
 		if(!isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) < 0) {
 			chk = false;
 			errorLabel.setText("Quantity Should be Numeric and Greater than 0");
@@ -424,7 +433,9 @@ public class ProductUI extends JFrame {
 			chk = false;
 			errorLabel.setText("Name Cannot Be Null");
 		}
+		}
 		return chk;
+	
 	}
 
 	public void fillFields(Product product) {
