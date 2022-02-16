@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -162,11 +163,11 @@ public class ProductUI extends JFrame {
 		setJMenuBar(menuBar);
 
 		topicPanel = new JPanel();
-		topicPanel.setLayout(new BorderLayout());
 		mainLabel = new JLabel("Product Management System");
 		mainLabel.setFont(new Font("Source Sans Pro", Font.BOLD, 32));
-		mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		topicPanel.add(mainLabel, BorderLayout.CENTER);
+		topicPanel.setLayout(new GridBagLayout());
+		topicPanel.add(mainLabel);
+		topicPanel.setBorder(BorderFactory.createEmptyBorder(110, 10, 10, 10));
 		mainPanel.add(topicPanel);
 		topicPanel.setVisible(true);
 		
@@ -463,7 +464,7 @@ public class ProductUI extends JFrame {
 			}
 		} else if(keyword.isSelected()) {
 			for(int i=0;i<productList.size();i++) {
-				if(productList.get(i).getName().contains(keywordField.getText()))
+				if(productList.get(i).getName().toLowerCase().contains(keywordField.getText().toLowerCase()))
 					productDetails += productList.get(i).toString() + "\n";
 			}
 		}  else if(all.isSelected()) {
