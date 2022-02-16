@@ -8,7 +8,7 @@ public class Product implements Serializable {
 	int quantityInHand;
 	int unitPrice;
 
-	public Product(String productId, String name, String description, int quantityInHand, int unitPrice) {
+	public Product(String productId, String name, String description, int quantityInHand, int unitPrice) {		//Contructors
 		super();
 		this.productId = productId;
 		this.name = name;
@@ -18,7 +18,7 @@ public class Product implements Serializable {
 	}
 
 
-
+																					//Getter Setter for Product 
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}

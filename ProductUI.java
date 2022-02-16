@@ -45,25 +45,25 @@ public class ProductUI extends JFrame {
 	private int index = 0;
 
 	public ProductUI() throws FileNotFoundException, IOException, ClassNotFoundException {
-		productList = readFromFile(FILEPATH);
-		class ExitMenuistener implements ActionListener {
+		productList = readFromFile(FILEPATH);													//Read Form file MEthod called
+		class ExitMenuistener implements ActionListener {										//Exit menu List
 			public void actionPerformed(ActionEvent event)
 
 			{
 				System.exit(0);
 			}
 		}
-		class AddUpdateMenuListener implements ActionListener {
+		class AddUpdateMenuListener implements ActionListener {									//Add/Update menu List
 			public void actionPerformed(ActionEvent event) {
 				showAddUpdateMenu();
 			}
 		}
-		class FindDisplayMenuListener implements ActionListener {
+		class FindDisplayMenuListener implements ActionListener {								//Find Display menu List
 			public void actionPerformed(ActionEvent event) {
 				showFindDisplayMenu();
 			}
 		}
-		class addProductListener implements ActionListener {
+		class addProductListener implements ActionListener {									//Add button
 			public void actionPerformed(ActionEvent event) {
 				try {
 					addButton();
@@ -74,7 +74,7 @@ public class ProductUI extends JFrame {
 				}
 			}
 		}
-		class updateProductListener implements ActionListener {
+		class updateProductListener implements ActionListener {								//Update button
 			public void actionPerformed(ActionEvent event) {
 				try {
 					updateButton();
@@ -84,7 +84,7 @@ public class ProductUI extends JFrame {
 				}
 			}
 		}
-		class firstProductListener implements ActionListener {
+		class firstProductListener implements ActionListener {								//First Item button
 			public void actionPerformed(ActionEvent event) {
 				try {
 					firstButton();
@@ -94,7 +94,7 @@ public class ProductUI extends JFrame {
 				}
 			}
 		}
-		class lastProductListener implements ActionListener {
+		class lastProductListener implements ActionListener {								//last Item button
 			public void actionPerformed(ActionEvent event) {
 				try {
 					lastButton();
@@ -104,7 +104,7 @@ public class ProductUI extends JFrame {
 				}
 			}
 		}
-		class prevProductListener implements ActionListener {
+		class prevProductListener implements ActionListener {								//Previous Item button
 			public void actionPerformed(ActionEvent event) {
 				try {
 					prevButton();
@@ -114,7 +114,7 @@ public class ProductUI extends JFrame {
 				}
 			}
 		}
-		class nextProductListener implements ActionListener {
+		class nextProductListener implements ActionListener {								//Next item button
 			public void actionPerformed(ActionEvent event) {
 				try {
 					nextButton();
@@ -124,7 +124,7 @@ public class ProductUI extends JFrame {
 				}
 			}
 		}
-		class findDisplayListener implements ActionListener {
+		class findDisplayListener implements ActionListener {								//Find Display item	 button
 			public void actionPerformed(ActionEvent event)
 			{
 				findDisplayButton();
@@ -143,7 +143,7 @@ public class ProductUI extends JFrame {
 		createUI();
 	}
 
-	public void createUI() {
+	public void createUI() {														//UI Creation method
 		setSize(670, 370);
 		mainPanel = new JPanel();
 		fileMenu = new JMenu("File");
@@ -296,13 +296,13 @@ public class ProductUI extends JFrame {
 	}
 
 
-	public void showAddUpdateMenu() {
+	public void showAddUpdateMenu() {								//Show/hide the add update menu				
 		topicPanel.setVisible(false);
 		addUpdatePanel.setVisible(true);
 		findDisplayPanel.setVisible(false);
 	}
 
-	public void showFindDisplayMenu() {
+	public void showFindDisplayMenu() {								//Show/hide the Find display menu	
 		topicPanel.setVisible(false);
 		addUpdatePanel.setVisible(false);
 		findDisplayPanel.setVisible(true);
@@ -416,7 +416,7 @@ public class ProductUI extends JFrame {
 		return check;
 	}
 
-	public boolean checkFields() {
+	public boolean checkFields() {													//Method to Check if user entered value is not null
 		boolean check = true;
 		for(int i=0;i<productList.size();i++) {
 			if(productList.get(i).getProductId().equals(productIdField.getText())){
