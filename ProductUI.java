@@ -170,7 +170,9 @@ public class ProductUI extends JFrame {
 		mainPanel.add(mainLabel);
 
 		addUpdatePanel = new JPanel();
-		addUpdatePanel.setBounds(0, 0, 650, 300);
+		//addUpdatePanel.setBounds(0, 0, 650, 300);
+		addUpdatePanel.setBounds(40, 50, 570, 300);
+
 		//product id
 		productIdPanel = new JPanel();
 		productIdLabel = new JLabel("Product ID");
@@ -188,7 +190,8 @@ public class ProductUI extends JFrame {
 		// description
 		descriptionPanel = new JPanel();
 		descriptionLabel = new JLabel("Description");
-		descriptionField = new JTextArea(3, 10);
+		//descriptionField = new JTextArea(3, 10);
+		descriptionField = new JTextArea(5, 20);
 		descriptionPanel.add(descriptionLabel);
 		descriptionPanel.add(descriptionField);
 		addUpdatePanel.add(descriptionPanel);
@@ -289,28 +292,28 @@ public class ProductUI extends JFrame {
 		add(mainPanel);
 	}
 
-	public void showAddUpdateMenu() {
+	public void showAddUpdateMenu() {													//Show the Add/Update Frame and Hide Main Frame
 		mainLabel.setVisible(false);
 		addUpdatePanel.setVisible(true);
 		findDisplayPanel.setVisible(false);
 	}
 
-	public void showFindDisplayMenu() {
+	public void showFindDisplayMenu() {													//Show the Find Display Menu Frame and Hide Main Frame
 		mainLabel.setVisible(false);
 		addUpdatePanel.setVisible(false);
 		findDisplayPanel.setVisible(true);
 	}
 
-	public void addButton() throws FileNotFoundException, IOException {
+	public void addButton() throws FileNotFoundException, IOException {				//Add Method to add new entry
 		if(checkFields()) {
 			errorLabel = new JLabel("");
-			Product pr = new Product(productIdField.getText(), 
+			Product pr = new Product(productIdField.getText(), 						//Creating a object of product with existing values
 					nameField.getText(), 
 					descriptionField.getText(),
 					Integer.parseInt(quantityField.getText()), 
 					Integer.parseInt(priceField.getText()));
 			productList.add(pr);
-			writeToFile(FILEPATH);
+			writeToFile(FILEPATH);														//Write new entry to file
 			productIdField.setText("");
 			nameField.setText("");
 			descriptionField.setText("");
@@ -319,10 +322,10 @@ public class ProductUI extends JFrame {
 		}
 	}
 
-	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {  		//Update Method to Update existing entry
 		if(checkFields(index)) {
 		errorLabel = new JLabel("");
-		productList.get(index).setProductId(productIdField.getText());
+		productList.get(index).setProductId(productIdField.getText());				//Getting the Values and Setting it at the particular Index
 		productList.get(index).setName(nameField.getText());
 		productList.get(index).setDescription(descriptionField.getText());
 		productList.get(index).setQuantityInHand(Integer.parseInt(quantityField.getText()));
@@ -336,19 +339,19 @@ public class ProductUI extends JFrame {
 		}
 	}
 
-	public void firstButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void firstButton() throws FileNotFoundException, ClassNotFoundException, IOException {   //Method for first Value Button
 		index = 0;
 		Product product = productList.get(index);
 		fillFields(product);
 	}
 
-	public void lastButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void lastButton() throws FileNotFoundException, ClassNotFoundException, IOException {		//Method for Last Value Button
 		index = productList.size() - 1;
 		Product product = productList.get(index);
 		fillFields(product);
 	}
 
-	public void prevButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void prevButton() throws FileNotFoundException, ClassNotFoundException, IOException {			//Method for Previous Value Button
 		if (index > 0) {
 			index--;
 			ArrayList<Product> productList = readFromFile(FILEPATH);
@@ -357,7 +360,7 @@ public class ProductUI extends JFrame {
 		}
 	}
 
-	public void nextButton() throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void nextButton() throws FileNotFoundException, ClassNotFoundException, IOException {			//Method for Next Value Button
 		if (index < productList.size() - 1) {
 			index++;
 			Product product = productList.get(index);
@@ -365,14 +368,14 @@ public class ProductUI extends JFrame {
 		}
 	}
 
-	public void writeToFile(String filepath) throws FileNotFoundException, IOException {
+	public void writeToFile(String filepath) throws FileNotFoundException, IOException {				//Method to write to file
 		try (ObjectOutputStream output = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(new File(filepath))))) {
 			output.writeObject(productList);
 		}
 	}
-
-	public ArrayList<Product> readFromFile(String filepath)
+	
+	public ArrayList<Product> readFromFile(String filepath)											//Method to Read from File
 			throws FileNotFoundException, IOException, ClassNotFoundException {
 		try (ObjectInputStream input = new ObjectInputStream(
 				new BufferedInputStream(new FileInputStream(new File(filepath))))) {
@@ -381,7 +384,7 @@ public class ProductUI extends JFrame {
 		}
 	}
 
-	public boolean checkFields(int idx) {
+	public boolean checkFields(int idx) {													//Method to Check if user entered value is not null
 		boolean chk = true;
 		for(int i=0;i<productList.size();i++) {
 			if(idx!=i && productList.get(i).getProductId().equals(productIdField.getText())){
@@ -409,7 +412,7 @@ public class ProductUI extends JFrame {
 		return chk;
 	}
 	
-	public boolean checkFields() {
+	public boolean checkFields() {					//Method to Check if user entered value is not null
 		boolean chk = true;
 		for(int i=0;i<productList.size();i++) {
 			if(productList.get(i).getProductId().equals(productIdField.getText())){
@@ -438,7 +441,7 @@ public class ProductUI extends JFrame {
 	
 	}
 
-	public void fillFields(Product product) {
+	public void fillFields(Product product) {										//Method to apply all values using setters
 		productIdField.setText(product.getProductId());
 		nameField.setText(product.getName());
 		descriptionField.setText(product.getDescription());
@@ -446,7 +449,7 @@ public class ProductUI extends JFrame {
 		priceField.setText(String.valueOf(product.getUnitPrice()));
 	}
 
-	public void findDisplayButton() {
+	public void findDisplayButton() {												//Display the keywords/All Values to user
 		String productDetails = "";
 		if(priceRange.isSelected()) {
 			for(int i=0;i<productList.size();i++) {
@@ -467,7 +470,7 @@ public class ProductUI extends JFrame {
 		resultField.setText(productDetails);
 	}
 
-	public static boolean isNumeric(String str) { 
+	public static boolean isNumeric(String str) { 								//method to check if field is numeric or not
 		try {  
 			Double.parseDouble(str);  
 			return true;
