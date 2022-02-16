@@ -411,7 +411,7 @@ public class ProductUI extends JFrame {
 		}
 		else if(nameField.getText().isEmpty()) {
 			check = false;
-			errorLabel.setText("Name Cannot Be Null");
+			errorLabel.setText("Name Cannot Be Empty");
 		}
 		}
 		return check;
