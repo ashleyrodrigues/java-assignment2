@@ -170,7 +170,7 @@ public class ProductUI extends JFrame {
 		topicPanel.setBorder(BorderFactory.createEmptyBorder(110, 10, 10, 10));
 		mainPanel.add(topicPanel);
 		topicPanel.setVisible(true);
-		
+
 		//add update screen
 		addUpdatePanel = new JPanel();
 		addUpdatePanel.setLayout(new GridLayout(0,1));
@@ -182,7 +182,7 @@ public class ProductUI extends JFrame {
 		productIdPanel.add(productIdLabel);
 		productIdPanel.add(productIdField);
 		firstRowPanel.add(productIdPanel);
-//		// name
+		//		// name
 		namePanel = new JPanel();
 		nameLabel = new JLabel("Name");
 		nameField = new JTextField(20);
@@ -190,7 +190,7 @@ public class ProductUI extends JFrame {
 		namePanel.add(nameField);
 		firstRowPanel.add(namePanel);
 		addUpdatePanel.add(firstRowPanel);
-//		// description
+		//		// description
 		secondRowPanel = new JPanel();
 		secondRowPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 90, 0));
 		descriptionPanel = new JPanel();
@@ -199,7 +199,7 @@ public class ProductUI extends JFrame {
 		descriptionPanel.add(descriptionLabel);
 		descriptionPanel.add(descriptionField);
 		secondRowPanel.add(descriptionPanel);
-//		// quantity
+		//		// quantity
 		quantityPanel = new JPanel();
 		quantityPanel.setLayout(new GridLayout(2,1, 5, 10));
 		quantityLabel = new JLabel("Quantity in hand");
@@ -213,7 +213,7 @@ public class ProductUI extends JFrame {
 		quantityPanel.add(priceField);
 		secondRowPanel.add(quantityPanel);
 		addUpdatePanel.add(secondRowPanel);
-//		// buttons
+		//		// buttons
 		addButton = new JButton("Add");
 		addButton.addActionListener(addProduct);
 		updateButton = new JButton("Update");
@@ -246,13 +246,13 @@ public class ProductUI extends JFrame {
 		errorLabel = new JLabel("");
 		errorPanel.add(errorLabel);
 		addUpdatePanel.add(errorPanel);
-		
-//		find and display screen
+
+		//		find and display screen
 		findDisplayPanel = new JPanel();
 		findDisplayPanel.setLayout(new GridLayout(2,1));
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
 		topPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-//		//filter radio buttons
+		//		//filter radio buttons
 		filterBy = new ButtonGroup();
 		priceRange = new JRadioButton("Price Range");
 		keyword = new JRadioButton("Keyword");
@@ -311,7 +311,6 @@ public class ProductUI extends JFrame {
 
 	public void addButton() throws FileNotFoundException, IOException {				//Add Method to add new entry
 		if(checkFields()) {
-			System.out.print("in");
 			errorLabel.setText("");
 			Product pr = new Product(productIdField.getText(), 						//Creating a object of product with existing values
 					nameField.getText(), 
@@ -330,19 +329,18 @@ public class ProductUI extends JFrame {
 
 	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {  		//Update Method to Update existing entry
 		if(checkFields(index)) {
-			System.out.print("in");
-		errorLabel.setText("");
-		productList.get(index).setProductId(productIdField.getText());				//Getting the Values and Setting it at the particular Index
-		productList.get(index).setName(nameField.getText());
-		productList.get(index).setDescription(descriptionField.getText());
-		productList.get(index).setQuantityInHand(Integer.parseInt(quantityField.getText()));
-		productList.get(index).setUnitPrice(Integer.parseInt(priceField.getText()));
-		writeToFile(FILEPATH);
-		productIdField.setText("");
-		nameField.setText("");
-		descriptionField.setText("");
-		quantityField.setText("");
-		priceField.setText("");
+			errorLabel.setText("");
+			productList.get(index).setProductId(productIdField.getText());				//Getting the Values and Setting it at the particular Index
+			productList.get(index).setName(nameField.getText());
+			productList.get(index).setDescription(descriptionField.getText());
+			productList.get(index).setQuantityInHand(Integer.parseInt(quantityField.getText()));
+			productList.get(index).setUnitPrice(Integer.parseInt(priceField.getText()));
+			writeToFile(FILEPATH);
+			productIdField.setText("");
+			nameField.setText("");
+			descriptionField.setText("");
+			quantityField.setText("");
+			priceField.setText("");
 		}
 	}
 
@@ -381,7 +379,7 @@ public class ProductUI extends JFrame {
 			output.writeObject(productList);
 		}
 	}
-	
+
 	public ArrayList<Product> readFromFile(String filepath)											//Method to Read from File
 			throws FileNotFoundException, IOException, ClassNotFoundException {
 		try (ObjectInputStream input = new ObjectInputStream(
@@ -403,18 +401,18 @@ public class ProductUI extends JFrame {
 			errorLabel.setText("Quantity And Price needs to be Entered");
 			check = false;
 		}else {
-		if(!isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) < 0) {
-			check = false;
-			errorLabel.setText("Quantity Should be Numeric and Greater than 0");
-		}
-		else if(!isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) < 0) {
-			check = false;
-			errorLabel.setText("Price Should be Numeric and Greater than 0");
-		}
-		else if(nameField.getText().isEmpty()) {
-			check = false;
-			errorLabel.setText("Name Cannot Be Empty");
-		}
+			if(!isNumeric(quantityField.getText())) {
+				check = false;
+				errorLabel.setText("Quantity Should be Numeric and Greater than 0");
+			}
+			else if(!isNumeric(priceField.getText())) {
+				check = false;
+				errorLabel.setText("Price Should be Numeric and Greater than 0");
+			}
+			else if(nameField.getText().isEmpty()) {
+				check = false;
+				errorLabel.setText("Name Cannot Be Empty");
+			}
 		}
 		return check;
 	}
@@ -431,21 +429,21 @@ public class ProductUI extends JFrame {
 			errorLabel.setText("Quantity And Price needs to be Entered");
 			check = false;
 		}else {
-		if(!isNumeric(quantityField.getText()) && Double.parseDouble(quantityField.getText()) < 0) {
-			check = false;
-			errorLabel.setText("Quantity Should be Numeric and Greater than 0");
-		}
-		else if(!isNumeric(priceField.getText()) && Double.parseDouble(priceField.getText()) < 0) {
-			check = false;
-			errorLabel.setText("Price Should be Numeric and Greater than 0");
-		}
-		else if(nameField.getText().isEmpty()) {
-			check = false;
-			errorLabel.setText("Name Cannot Be Empty");
-		}
+			if(!isNumeric(quantityField.getText())) {
+				check = false;
+				errorLabel.setText("Quantity Should be Numeric and Greater than 0");
+			}
+			else if(!isNumeric(priceField.getText())) {
+				check = false;
+				errorLabel.setText("Price Should be Numeric and Greater than 0");
+			}
+			else if(nameField.getText().isEmpty()) {
+				check = false;
+				errorLabel.setText("Name Cannot Be Empty");
+			}
 		}
 		return check;
-	
+
 	}
 
 	public void fillFields(Product product) {										//Method to apply all values using setters
@@ -479,8 +477,11 @@ public class ProductUI extends JFrame {
 
 	public static boolean isNumeric(String str) { 								//method to check if field is numeric or not
 		try {  
-			Double.parseDouble(str);  
-			return true;
+			int newInt = Integer.parseInt(str);  
+			if(newInt > 0)
+				return true;
+			else 
+				return false;
 		} catch(NumberFormatException e){  
 			return false;  
 		}  
