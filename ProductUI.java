@@ -311,7 +311,8 @@ public class ProductUI extends JFrame {
 
 	public void addButton() throws FileNotFoundException, IOException {				//Add Method to add new entry
 		if(checkFields()) {
-			errorLabel = new JLabel("");
+			System.out.print("in");
+			errorLabel.setText("");
 			Product pr = new Product(productIdField.getText(), 						//Creating a object of product with existing values
 					nameField.getText(), 
 					descriptionField.getText(),
@@ -329,7 +330,8 @@ public class ProductUI extends JFrame {
 
 	public void updateButton() throws FileNotFoundException, ClassNotFoundException, IOException {  		//Update Method to Update existing entry
 		if(checkFields(index)) {
-		errorLabel = new JLabel("");
+			System.out.print("in");
+		errorLabel.setText("");
 		productList.get(index).setProductId(productIdField.getText());				//Getting the Values and Setting it at the particular Index
 		productList.get(index).setName(nameField.getText());
 		productList.get(index).setDescription(descriptionField.getText());
@@ -439,7 +441,7 @@ public class ProductUI extends JFrame {
 		}
 		else if(nameField.getText().isEmpty()) {
 			check = false;
-			errorLabel.setText("Name Cannot Be Null");
+			errorLabel.setText("Name Cannot Be Empty");
 		}
 		}
 		return check;
